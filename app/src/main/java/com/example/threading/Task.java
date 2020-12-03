@@ -24,14 +24,6 @@ public abstract class Task<Params, Progress, Result> implements Runnable{
         Thread thread = new Thread(this);
         thread.start();
 
-        try{
-            thread.join();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-            onPostExecute(null);
-            return;
-        }
-
         onPostExecute(threadResult);
     }
 
