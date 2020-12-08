@@ -23,13 +23,18 @@ public abstract class Task<Params, Progress, Result> implements Runnable{
 
         Thread thread = new Thread(this);
         thread.start();
-
-        onPostExecute(threadResult);
     }
 
     @Override
     public void run() {
         threadResult = doInBackground(argument);
+
+        activityContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                onPostExecute(threadResult);
+            }
+        });
     }
 
     final public void publishProgress(Progress data){
